@@ -1,8 +1,16 @@
 import './App.css';
+import Banner from './components/Banner'; 
+
+const cardData = [
+];
 
 function App() {
   return (
-    <h1>Ola Mundo</h1>
+    <>
+      <Banner /> 
+      <main className="App">
+      </main>
+    </>
   );
 }
 
