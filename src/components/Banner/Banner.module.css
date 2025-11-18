@@ -1,0 +1,50 @@
+.banner {
+    width: 100%;
+    height: 450px;
+    margin-top: 80px; /* Compensar Header fixo */
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid #f59e0b;
+}
+
+/* Efeito de fundo abstrato */
+.banner::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 60%);
+    animation: pulse 10s infinite;
+}
+
+.content {
+    z-index: 1;
+    padding: 20px;
+}
+
+.title {
+    font-size: 3.5rem;
+    margin: 0;
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    color: #f8fafc;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: #94a3b8;
+    margin-top: 10px;
+    max-width: 600px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 0.5; }
+}

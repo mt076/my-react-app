@@ -1,0 +1,41 @@
+.section {
+    margin: 40px 0;
+    padding-left: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.title {
+    font-size: 1.5rem;
+    color: #f59e0b; /* Dourado */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    position: relative;
+}
+
+/* Scroll Horizontal */
+.list {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0 20px 0;
+    scroll-behavior: smooth;
+}
+
+.list::-webkit-scrollbar {
+    height: 6px;
+}
+.list::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+.list::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 3px;
+}
