@@ -1,38 +1,47 @@
 :root {
-  --bg-primary: #0f172a;    /* Azul noite */
-  --bg-secondary: #1e293b;  /* Azul ardósia */
-  --accent: #f59e0b;        /* Dourado/Âmbar */
-  --text-primary: #f8fafc;
+  --bg-primary: #050a14;      /* Quase preto */
+  --bg-secondary: #0f172a;    /* Azul muito escuro */
+  --accent: #00f0ff;          /* Ciano Neon Cyberpunk */
+  --accent-dim: rgba(0, 240, 255, 0.1);
+  --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
-  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-main: 'Segoe UI', Tahoma, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace; /* Fonte para detalhes técnicos */
 }
 
 body {
   margin: 0;
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
+  
+  /* Padrão de Grid Tecnológico no fundo */
+  background-image: 
+    linear-gradient(var(--bg-secondary) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-secondary) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* Scrollbar moderna */
+/* Scrollbar estilo Terminal */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
+  border-left: 1px solid var(--bg-secondary);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--bg-secondary);
-  border-radius: 4px;
+  border: 1px solid var(--accent);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
 }

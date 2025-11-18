@@ -1,0 +1,95 @@
+{
+  "videos": [
+    {
+      "id": "F608hJ5_wsg",
+      "title": "O que é Ciência de Dados?",
+      "url": "https://www.youtube.com/watch?v=F608hJ5_wsg",
+      "cover": "https://img.youtube.com/vi/F608hJ5_wsg/maxresdefault.jpg",
+      "category": "Fundamentos"
+    },
+    {
+      "id": "Jy7Wj77j0yE",
+      "title": "O que é Machine Learning?",
+      "url": "https://www.youtube.com/watch?v=Jy7Wj77j0yE",
+      "cover": "https://img.youtube.com/vi/Jy7Wj77j0yE/maxresdefault.jpg",
+      "category": "Fundamentos"
+    },
+    {
+      "id": "ccZ2PY3PF8U",
+      "title": "Big Data Explicado",
+      "url": "https://www.youtube.com/watch?v=ccZ2PY3PF8U",
+      "cover": "https://img.youtube.com/vi/ccZ2PY3PF8U/maxresdefault.jpg",
+      "category": "Fundamentos"
+    },
+    {
+      "id": "rfscVS0vtbw",
+      "title": "Python para Iniciantes (Curso Gratuito)",
+      "url": "https://www.youtube.com/watch?v=rfscVS0vtbw",
+      "cover": "https://img.youtube.com/vi/rfscVS0vtbw/maxresdefault.jpg",
+      "category": "Python & Ferramentas"
+    },
+    {
+      "id": "xL7iN7Q_H2k",
+      "title": "Pandas Python: Análise de Dados",
+      "url": "https://www.youtube.com/watch?v=xL7iN7Q_H2k",
+      "cover": "https://img.youtube.com/vi/xL7iN7Q_H2k/maxresdefault.jpg",
+      "category": "Python & Ferramentas"
+    },
+    {
+      "id": "4r6gr7LcHmA",
+      "title": "SQL para Data Science em 1 hora",
+      "url": "https://www.youtube.com/watch?v=4r6gr7LcHmA",
+      "cover": "https://img.youtube.com/vi/4r6gr7LcHmA/maxresdefault.jpg",
+      "category": "Python & Ferramentas"
+    },
+    {
+      "id": "I_kdyZ3r4S0",
+      "title": "Power BI para Iniciantes",
+      "url": "https://www.youtube.com/watch?v=I_kdyZ3r4S0",
+      "cover": "https://img.youtube.com/vi/I_kdyZ3r4S0/maxresdefault.jpg",
+      "category": "Python & Ferramentas"
+    },
+    {
+      "id": "CqOdqXqM8v8",
+      "title": "Redes Neurais Explicadas",
+      "url": "https://www.youtube.com/watch?v=CqOdqXqM8v8",
+      "cover": "https://img.youtube.com/vi/CqOdqXqM8v8/maxresdefault.jpg",
+      "category": "Inteligência Artificial"
+    },
+    {
+      "id": "aircAruvnKk",
+      "title": "Redes Neurais: Descida do Gradiente",
+      "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+      "cover": "https://img.youtube.com/vi/aircAruvnKk/maxresdefault.jpg",
+      "category": "Inteligência Artificial"
+    },
+    {
+      "id": "f_799P8lT4Y",
+      "title": "Inteligência Artificial Generativa",
+      "url": "https://www.youtube.com/watch?v=f_799P8lT4Y",
+      "cover": "https://img.youtube.com/vi/f_799P8lT4Y/maxresdefault.jpg",
+      "category": "Inteligência Artificial"
+    },
+    {
+      "id": "2ePf9rue1Ao",
+      "title": "Computer Vision - Visão Computacional",
+      "url": "https://www.youtube.com/watch?v=2ePf9rue1Ao",
+      "cover": "https://img.youtube.com/vi/2ePf9rue1Ao/maxresdefault.jpg",
+      "category": "Inteligência Artificial"
+    },
+    {
+      "id": "6tNS--WetLI",
+      "title": "Roteiro de estudos Data Science",
+      "url": "https://www.youtube.com/watch?v=6tNS--WetLI",
+      "cover": "https://img.youtube.com/vi/6tNS--WetLI/maxresdefault.jpg",
+      "category": "Carreira & Mercado"
+    },
+    {
+      "id": "S9uPNppGsGo",
+      "title": "O mercado de Data Science",
+      "url": "https://www.youtube.com/watch?v=S9uPNppGsGo",
+      "cover": "https://img.youtube.com/vi/S9uPNppGsGo/maxresdefault.jpg",
+      "category": "Carreira & Mercado"
+    }
+  ]
+}

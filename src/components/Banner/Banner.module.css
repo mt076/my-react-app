@@ -1,50 +1,62 @@
 .banner {
     width: 100%;
-    height: 450px;
-    margin-top: 80px; /* Compensar Header fixo */
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    height: 500px;
+    margin-top: 80px;
+    /* Fundo complexo tecnológico */
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.1) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
-    overflow: hidden;
-    border-bottom: 4px solid #f59e0b;
-}
-
-/* Efeito de fundo abstrato */
-.banner::before {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 60%);
-    animation: pulse 10s infinite;
+    border-bottom: 1px solid var(--accent);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
 }
 
 .content {
-    z-index: 1;
-    padding: 20px;
+    z-index: 2;
+    padding: 40px;
+    background: rgba(5, 10, 20, 0.8);
+    border: 1px solid var(--bg-secondary);
+    backdrop-filter: blur(5px);
+    border-radius: 4px;
+    position: relative;
+}
+
+/* Cantos tecnológicos na caixa de texto */
+.content::after {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border: 1px solid var(--accent);
+    clip-path: polygon(
+        0 10px, 10px 0, 
+        100% 0, 100% calc(100% - 10px), 
+        calc(100% - 10px) 100%, 0 100%
+    );
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .title {
-    font-size: 3.5rem;
+    font-size: 4rem;
     margin: 0;
-    font-weight: 900;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    color: #f8fafc;
+    font-weight: 800;
+    letter-spacing: -2px;
+    background: linear-gradient(90deg, #fff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
 }
 
 .subtitle {
-    font-size: 1.4rem;
-    color: #94a3b8;
-    margin-top: 10px;
-    max-width: 600px;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.2); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 0.5; }
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-top: 15px;
+    letter-spacing: 2px;
 }

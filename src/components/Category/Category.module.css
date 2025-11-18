@@ -1,0 +1,44 @@
+.section {
+    margin: 50px 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--bg-secondary);
+    padding-bottom: 10px;
+}
+
+.title {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Adiciona um > antes do título estilo terminal */
+.title::before {
+    content: '> ';
+    margin-right: 10px;
+    color: var(--text-secondary);
+}
+
+.list {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 5px 20px 5px;
+    scroll-behavior: smooth;
+}
+
+.list::-webkit-scrollbar {
+    height: 4px;
+}
+.list::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+.list::-webkit-scrollbar-thumb {
+    background: var(--accent);
+}

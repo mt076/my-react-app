@@ -1,45 +1,78 @@
-import React, { useState, useMemo } from 'react';
-import './App.css'; 
+import React, { useState, useEffect } from 'react';
+import './App.css'; // Pode deixar esse arquivo vazio ou apenas com reset
 import Header from './components/Header';
 import Banner from './components/Banner';
 import Container from './components/Container';
-import Categoria from './components/Banner/Categoria'; // CORRIGIDO: O nome do componente é Categoria
+import Category from './components/Category';
 import Footer from './components/Footer';
-import Loading from './components/Banner/Categoria/index.js'; // CORRIGIDO: O código do Loading está neste arquivo
-import { useVideos } from './useVideos'; // Corrigido: O hook está na raiz de /src
 
 function App() {
+  const [content, setContent] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('');
-  const { loading, error, getCategories } = useVideos();
-  
-  // useMemo garante que as categorias só são recalculadas se o filtro mudar.
-  const categoriesToDisplay = useMemo(() => getCategories(filter), [filter, getCategories]);
+
+  useEffect(() => {
+    // Simulando um delay de API para dar um ar mais profissional
+    const loadData = async () => {
+      try {
+        const response = await fetch('/db.json');
+        const data = await response.json();
+        setContent(data.videos);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      } finally {
+        // Delay artificial de 800ms
+        setTimeout(() => setLoading(false), 800);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Lógica para agrupar vídeos filtrados
+  const getCategories = () => {
+    const groups = {};
+    
+    content.forEach(video => {
+      // Filtro case-insensitive
+      if (filter && !video.title.toLowerCase().includes(filter.toLowerCase())) {
+        return;
+      }
+
+      if (!groups[video.category]) {
+        groups[video.category] = [];
+      }
+      groups[video.category].push(video);
+    });
+
+    return groups;
+  };
+
+  const categoriesToDisplay = getCategories();
 
   return (
     <>
       <Header onSearch={setFilter} />
-      <Banner 
-        title="Evolua seu Código"
-        subtitle="Uma seleção curada dos melhores conteúdos para devs front-end."
-      />
+      <Banner />
       
       <Container>
-        {loading && <Loading />}
-        {error && <div className="error-message"><h2>{error}</h2></div>}
-        {!loading && !error && (
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '50px', color: '#94a3b8' }}>
+            <h2>Carregando biblioteca...</h2>
+          </div>
+        ) : (
           <>
-            {categoriesToDisplay.length > 0 ? (
-              categoriesToDisplay.map(category => (
-                <Categoria 
-                  key={category.title}
-                  title={category.title}
-                  videos={category.videos}
+            {Object.keys(categoriesToDisplay).length > 0 ? (
+              Object.keys(categoriesToDisplay).map(categoryTitle => (
+                <Category 
+                  key={categoryTitle}
+                  title={categoryTitle}
+                  videos={categoriesToDisplay[categoryTitle]}
                 />
               ))
             ) : (
-              <div className="not-found-message">
-                <h2>Nenhum conteúdo encontrado.</h2>
-                <p>Tente uma busca diferente ou verifique mais tarde.</p>
+              <div style={{ textAlign: 'center', padding: '50px', color: '#94a3b8' }}>
+                <h2>Nenhum conteúdo encontrado para "{filter}"</h2>
               </div>
             )}
           </>

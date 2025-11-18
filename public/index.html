@@ -1,22 +1,390 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataMind - System Active</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;800&display=swap');
+
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-magenta: #ff00ff; /* Nova cor para contraste (Glitch) */
+            --dark-bg: #05050a;
+            --card-bg: #0a0a12;
+            --grid-line: rgba(0, 243, 255, 0.05);
+        }
+
+        /* --- 1. CURSOR CUSTOMIZADO (MIRA) --- */
+        * { cursor: none; /* Esconde o mouse padrão */ }
+
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            border: 1px solid var(--neon-cyan);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10000;
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: difference;
+        }
+        /* Ponto central do cursor */
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 4px; height: 4px;
+            background: var(--neon-cyan);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+        /* Estado de "Hover" (quando passa em links/botões) */
+        body.hovering #custom-cursor {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-magenta);
+        }
+
+        /* --- 2. SCANLINES (EFEITO MONITOR) --- */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glow do fundo */
+        .background-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.08), transparent 60%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: -1;
+            top: 0; left: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 1px solid var(--neon-cyan);
+            padding: 5px 15px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        /* Detalhe decorativo no logo */
+        .logo::before {
+            content: 'SYS.ON';
+            position: absolute;
+            top: -10px; right: 0;
+            font-size: 0.6rem;
+            background: var(--neon-cyan);
+            color: #000;
+            padding: 0 4px;
+        }
+
+        .search-bar input {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            color: var(--neon-cyan);
+            padding: 10px 15px;
+            font-family: 'JetBrains Mono', monospace;
+            width: 300px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .search-bar input:focus {
+            border-color: var(--neon-cyan);
+        }
+
+        .hero {
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-box {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 100px;
+            background: rgba(10, 10, 18, 0.7);
+            position: relative;
+        }
+
+        /* Cantos Cyberpunk */
+        .hero-box::after {
+            content: ''; position: absolute; top: -2px; left: -2px; width: 20px; height: 20px;
+            border-top: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan);
+        }
+        .hero-box::before {
+            content: ''; position: absolute; bottom: -2px; right: -2px; width: 20px; height: 20px;
+            border-bottom: 2px solid var(--neon-cyan); border-right: 2px solid var(--neon-cyan);
+        }
+
+        /* --- 3. EFEITO GLITCH NO TÍTULO --- */
+        .glitch {
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            color: #fff;
+            text-shadow: 2px 2px var(--neon-magenta), -2px -2px var(--neon-cyan);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { text-shadow: 2px 2px var(--neon-magenta), -2px -2px var(--neon-cyan); clip-path: inset(0 0 0 0); transform: translate(0); }
+            2% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 2px); }
+            4% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+            6% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--neon-cyan);
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .content-section { padding: 50px; }
+
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: #fff;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            border-left: 3px solid var(--neon-cyan);
+            padding-left: 15px;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .card {
+            width: 320px;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 25px;
+            position: relative;
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        /* Linha decorativa no topo do card */
+        .card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), transparent);
+        }
+
+        .card-image {
+            width: 100%; height: 140px;
+            background: #111;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+            border: 1px dashed #333;
+            transform: translateZ(20px);
+        }
+        /* Pontos decorativos na imagem */
+        .card-image::after { content: 'IMG_DATA_01'; font-family: 'JetBrains Mono'; font-size: 0.7rem; color: #444; }
+
+        .card h3 {
+            margin: 0 0 10px 0; font-size: 1.1rem; color: #fff;
+            transform: translateZ(30px);
+        }
+
+        .btn-card {
+            display: inline-block; margin-top: 15px; padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transform: translateZ(40px);
+            transition: all 0.3s;
+        }
+        .btn-card:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        /* Rodapé estilo Terminal */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid #333;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+        .sys-status::before {
+            content: '●'; color: #0f0; margin-right: 5px;
+            animation: blink 2s infinite;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="custom-cursor"></div>
     
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
+    <div class="background-glow"></div>
+
+    <header>
+        <div class="logo hover-target">DataMind</div>
+        <div class="search-bar">
+            <input type="text" class="hover-target" placeholder="INIT_SEARCH_QUERY...">
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-box">
+            <h1 class="glitch" data-text="DOMINE OS DADOS">DOMINE OS DADOS</h1>
+            <p class="subtitle">
+                <span id="typing-text"></span><span class="cursor">_</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section-title">> ACESSAR_FUNDAMENTOS.EXE</div>
+        
+        <div class="cards-container">
+            <div class="card hover-target">
+                <div class="card-image"></div>
+                <h3>Ciência de Dados</h3>
+                <p style="font-size: 0.8rem; color: #777; transform: translateZ(20px);">Análise exploratória e estatística aplicada.</p>
+                <a href="#" class="btn-card hover-target">INICIAR_MÓDULO</a>
+            </div>
+
+            <div class="card hover-target">
+                <div class="card-image"></div>
+                <h3>Machine Learning</h3>
+                <p style="font-size: 0.8rem; color: #777; transform: translateZ(20px);">Redes neurais e algoritmos preditivos.</p>
+                <a href="#" class="btn-card hover-target">INICIAR_MÓDULO</a>
+            </div>
+
+            <div class="card hover-target">
+                <div class="card-image"></div>
+                <h3>Big Data Ops</h3>
+                <p style="font-size: 0.8rem; color: #777; transform: translateZ(20px);">Processamento massivo e clusters.</p>
+                <a href="#" class="btn-card hover-target">INICIAR_MÓDULO</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="sys-status">SYSTEM_STATUS: ONLINE</div>
+        <div>VERSION: 2.0.77</div>
+    </footer>
+
+    <script>
+        // --- LÓGICA DO CURSOR CUSTOMIZADO ---
+        const cursor = document.getElementById('custom-cursor');
+        const glow = document.querySelector('.background-glow');
+        const hoverTargets = document.querySelectorAll('.hover-target, a, input');
+
+        document.addEventListener('mousemove', (e) => {
+            // Move o cursor
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Move o brilho do fundo
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Aumenta o cursor quando passa em itens interativos
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            target.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // --- EFEITO DIGITAÇÃO ---
+        const textToType = "Explore o universo da IA, Dados e Machine Learning.";
+        const typingElement = document.getElementById('typing-text');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                typingElement.innerHTML += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 30 + Math.random() * 50); // Velocidade variável (mais natural)
+            }
+        }
+        window.onload = typeWriter;
+
+        // --- EFEITO 3D TILT NOS CARDS ---
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10; 
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
 </html>
