@@ -11,6 +11,13 @@
     justify-content: space-between;
     padding: 0 40px;
     z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 40px;
 }
 
 .logo {
@@ -22,19 +29,10 @@
     border: 1px solid var(--accent);
     padding: 5px 15px;
     position: relative;
-    box-shadow: 0 0 10px var(--accent-dim);
+    text-shadow: 0 0 10px var(--accent);
 }
 
-.logo::before {
-    content: 'SYS.QM';
-    position: absolute;
-    top: -10px;
-    right: 0;
-    font-size: 0.5rem;
-    color: var(--accent);
-    background: var(--bg-primary);
-    padding: 0 4px;
-}
+.logo span { color: var(--accent); }
 
 .searchBox {
     width: 400px;
@@ -42,20 +40,61 @@
 
 .input {
     width: 100%;
-    padding: 12px 20px;
+    padding: 10px 15px;
     background-color: rgba(0,0,0,0.3);
     border: 1px solid var(--text-secondary);
-    color: var(--accent);
+    color: var(--text-primary);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     outline: none;
-    transition: 0.3s;
+    border-radius: 4px;
 }
 
 .input:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 15px var(--accent-dim);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
 }
-.input::placeholder {
-    color: rgba(148, 163, 184, 0.5);
+
+/* Perfil */
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.xpBarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.xpLabel {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    margin-bottom: 2px;
+}
+
+.progressBar {
+    width: 150px;
+    height: 6px;
+    background-color: var(--bg-secondary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #d946ef);
+    box-shadow: 0 0 10px var(--accent);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    object-fit: cover;
+    padding: 2px;
+    background: var(--bg-secondary);
 }

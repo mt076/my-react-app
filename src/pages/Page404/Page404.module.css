@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.errorCode {
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-dim);
+    margin: 0;
+    font-family: var(--font-mono);
+}
+
+.message {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    color: var(--text-secondary);
+}

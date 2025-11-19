@@ -1,0 +1,64 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 80px; /* Abaixo do header */
+    bottom: 0;
+    width: 250px;
+    background-color: rgba(5, 10, 20, 0.95);
+    border-right: 1px solid var(--bg-secondary);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 900;
+    backdrop-filter: blur(5px);
+}
+
+.menuItem {
+    padding: 15px 25px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menuItem:hover, .active {
+    background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), transparent);
+    color: var(--accent);
+    border-left-color: var(--accent);
+    text-shadow: 0 0 8px var(--accent-dim);
+}
+
+.icon {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.divider {
+    height: 1px;
+    background: var(--bg-secondary);
+    margin: 20px 0;
+}
+
+.userStats {
+    margin-top: auto;
+    padding: 20px;
+    border-top: 1px solid var(--bg-secondary);
+}
+
+.statRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.statValue {
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
