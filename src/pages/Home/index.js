@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Banner from '../../components/Banner';
 import Category from '../../components/Category';
 import ProgressCard from '../../components/ProgressCard'; // Import novo
-import Footer from '../../components/Footer';
 
 // Estilo inline para o layout grid da página principal
 const layoutStyle = {
@@ -64,7 +62,6 @@ function Home() {
 
   return (
     <>
-      <Header onSearch={setFilter} user={user} />
       
       <div style={layoutStyle}>
           <Sidebar user={user} />
@@ -96,7 +93,6 @@ function Home() {
                       />
                   ))}
               </div>
-              <Footer />
           </main>
       </div>
     </>
