@@ -1,7 +1,12 @@
+
 import { useState, useEffect, useCallback } from 'react';
 
 export function useVideos() {
   const [videos, setVideos] = useState([]);
+ 
+  const [user, setUser] = useState(null); 
+  const [inProgress, setInProgress] = useState([]); 
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,9 +19,10 @@ export function useVideos() {
           throw new Error('Falha ao buscar os dados.');
         }
         const data = await response.json();
-        // Simula um delay para UX em ambiente de desenvolvimento
         setTimeout(() => {
             setVideos(data.videos);
+            setUser(data.user);
+            setInProgress(data.in_progress || []);
             setLoading(false);
         }, 800);
       } catch (err) {
@@ -40,5 +46,7 @@ export function useVideos() {
     }, {}));
   }, [videos]);
 
-  return { videos, loading, error, getCategories };
+  // [MODIFICADO] Retornando user e inProgress junto aos outros estados
+  return { videos, user, inProgress, loading, error, getCategories };
+  // [/MODIFICADO]
 }

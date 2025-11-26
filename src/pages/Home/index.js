@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Banner from '../../components/Banner';
 import Category from '../../components/Category';
-import ProgressCard from '../../components/ProgressCard'; // Import novo
+import ProgressCard from '../../components/ProgressCard';
+import Header from '../../components/Header'; 
+import { useVideos } from '../../useVideos'; 
 
-// Estilo inline para o layout grid da página principal
 const layoutStyle = {
     display: 'flex',
     minHeight: '100vh',
-    paddingTop: '80px' // Header height
 };
 
 const mainContentStyle = {
@@ -24,7 +25,7 @@ const continueWatchingSection = {
 };
 
 const sectionTitle = {
-    color: '#d946ef', // Cor diferente para destaque
+    color: '#d946ef', 
     fontFamily: 'var(--font-mono)',
     fontSize: '1.2rem',
     marginBottom: '15px',
@@ -33,43 +34,23 @@ const sectionTitle = {
 };
 
 function Home() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState(''); 
 
-  useEffect(() => {
-    fetch('/db.json')
-      .then(response => response.json())
-      .then(jsonData => {
-        setData(jsonData);
-        setTimeout(() => setLoading(false), 500);
-      })
-      .catch(error => console.error("Erro:", error));
-  }, []);
+  const { loading, user, inProgress, getCategories } = useVideos();
 
   if (loading) return <div style={{color: '#fff', textAlign: 'center', marginTop: '20%'}}>Carregando sistema...</div>;
 
-  const videos = data?.videos || [];
-  const user = data?.user;
-  const inProgress = data?.in_progress || [];
-
-  // Filtro
-  const filteredVideos = videos.filter(v => 
-    v.title.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  const categories = [...new Set(filteredVideos.map(video => video.category))];
+  const categories = getCategories(filter);
 
   return (
     <>
+      <Header onSearch={setFilter} user={user} />
       
       <div style={layoutStyle}>
           <Sidebar user={user} />
           
           <main style={mainContentStyle}>
               {!filter && <Banner />}
-              
-              {/* Seção Continuar Assistindo - Só aparece se não estiver filtrando */}
               {!filter && inProgress.length > 0 && (
                   <div style={continueWatchingSection}>
                       <h3 style={sectionTitle}>&gt; CONTINUAR_ESTUDOS</h3>
@@ -85,13 +66,19 @@ function Home() {
               )}
 
               <div style={{padding: '0 40px 40px 40px'}}>
+                  {/* [MODIFICADO] Iterando sobre as categorias retornadas pelo getCategories(filter) */}
                   {categories.map(category => (
                       <Category 
-                        key={category}
-                        title={category}
-                        videos={filteredVideos.filter(video => video.category === category)}
+                        key={category.title}
+                        title={category.title}
+                        videos={category.videos}
                       />
                   ))}
+
+                  {/* [NOVO] Mensagem de feedback caso nenhum vídeo seja encontrado */}
+                  {filter && categories.length === 0 && (
+                    <h3 style={{color: '#d946ef', marginTop: '40px', textAlign: 'center'}}>&gt; Nenhum módulo encontrado com "{filter}"</h3>
+                  )}
               </div>
           </main>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // Pode deixar esse arquivo vazio ou apenas com reset
+import './App.css';
 import Header from './components/Header';
 import Banner from './components/Banner';
 import Container from './components/Container';
@@ -12,7 +12,6 @@ function App() {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    // Simulando um delay de API para dar um ar mais profissional
     const loadData = async () => {
       try {
         const response = await fetch('/db.json');
@@ -21,7 +20,6 @@ function App() {
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       } finally {
-        // Delay artificial de 800ms
         setTimeout(() => setLoading(false), 800);
       }
     };
@@ -29,12 +27,11 @@ function App() {
     loadData();
   }, []);
 
-  // Lógica para agrupar vídeos filtrados
   const getCategories = () => {
     const groups = {};
     
     content.forEach(video => {
-      // Filtro case-insensitive
+
       if (filter && !video.title.toLowerCase().includes(filter.toLowerCase())) {
         return;
       }
